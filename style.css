@@ -60,6 +60,8 @@ h2 { margin: 8px 0 0; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.05; le
 .section-head p { max-width: 390px; margin: 0; color: var(--muted); }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .card { min-height: 205px; padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.card { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.card:hover { transform: translateY(-5px); border-color: rgba(57,232,120,.55); box-shadow: 0 14px 36px rgba(21, 194, 82, .1); }
 .number { color: var(--green); font: 700 .82rem "SFMono-Regular", Consolas, monospace; }
 h3 { margin: 29px 0 7px; font-size: 1.18rem; letter-spacing: -.025em; }
 .card p { margin: 0; color: var(--muted); font-size: .95rem; }
@@ -67,6 +69,16 @@ h3 { margin: 29px 0 7px; font-size: 1.18rem; letter-spacing: -.025em; }
 .quote small { display: block; margin-top: 12px; color: var(--muted); font-size: .86rem; letter-spacing: 0; }
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 27px 0 38px; color: var(--muted); font-size: .85rem; }
 footer strong { color: var(--green); font-weight: 650; }
+
+/* Scroll reveals are enabled by JavaScript so content stays visible if scripts are off. */
+.reveal-ready .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.reveal-ready .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-ready .terminal.reveal-on-scroll { transform: translateY(24px) rotate(1.5deg); }
+.reveal-ready .terminal.reveal-on-scroll.is-visible { transform: translateY(0) rotate(1.5deg); }
 
 @media (max-width: 760px) {
   .shell { width: min(100% - 36px, 560px); }
@@ -83,4 +95,8 @@ footer strong { color: var(--green); font-weight: 650; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .cursor { animation: none; }
+  .card, .reveal-ready .reveal-on-scroll { transition: none; }
+  .reveal-ready .reveal-on-scroll { opacity: 1; transform: none; }
+  .reveal-ready .terminal.reveal-on-scroll,
+  .reveal-ready .terminal.reveal-on-scroll.is-visible { transform: none; }
 }
